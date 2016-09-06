@@ -1,0 +1,224 @@
+@import "base/reset";
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body{
+  background: lightslategrey;
+  text-align: center;
+  background-color: #e2e2e2;
+  background-image: url("../img/shadow_light.png");
+  background-repeat: repeat-x;
+}
+
+@container_width:1080px;
+@container_height:720px;
+#container {
+  position: fixed;
+  width: @container_width;
+  height: @container_height;
+  top:50%;
+  left:50%;
+  transform: translate3d(-50%, -50%, 0);
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  &:after {
+    .weUIborder()
+  }
+}
+
+#live{
+  width:100%;
+  height:100%;
+  -webkit-box-flex: 4;
+  -webkit-flex: 4;
+  flex: 4;
+}
+
+#comment{
+  z-index: 2;
+  width:100%;
+  height:100%;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding: 7px;
+  ul{
+    .host{
+
+    }
+    .guest{
+
+    }
+    li{
+      text-align: left;
+      font-size: 13px;
+      line-height: 13px;
+      padding:2px;
+      &.Round{
+        font-size: 16px;
+        line-height: 20px;
+        padding: 2px;
+      }
+      &.Attack{
+        color: #999;
+        .skill, .damage{
+          font-weight: bold;
+          color:#383939;
+        }
+      }
+      &.Kill{
+        color:red;
+      }
+      &.GameOver{
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.HalfGround{
+  position: relative;
+  width:100%;
+  height:e("calc(50% - 5px)");
+  display: flex;
+  &:first-child{
+    margin-bottom: 10px
+  }
+  .name{
+    padding:10px;
+    flex: 1;
+    position: relative;
+    div{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .cards{
+    position: relative;
+    flex: 6;
+    font-size: 0px;
+    height: 100%;
+    .card{
+      font-size: 12px;
+      position: absolute;
+      width:50%;
+      height:50%;
+      color:grey;
+      &:nth-child(1){
+        top:0px;
+        left:0px;
+        right:50%;
+        bottom: 50%;
+      }
+      &:nth-child(2){
+        top:0px;
+        left:50%;
+        right:0;
+        bottom: 50%;
+      }
+      &:nth-child(3){
+        top:50%;
+        left:0px;
+        right:50%;
+        bottom: 0;
+      }
+      &:nth-child(4){
+        top:50%;
+        left:50%;
+        right:0;
+        bottom: 0;
+      }
+      &.backrow{
+        background:rgb(247, 247, 247)
+      }
+      .cardContainer{
+        position: relative;
+        width: 203px;
+        height: 90%;
+        margin: 2.5% auto 2.5% auto;
+        &:after {
+          .weUIborder()
+        }
+        .row_{
+          z-index: 3;
+          position: relative;
+          height:16.66%;
+          display: flex;
+          &:before{
+            .setTopLine(@weuiCellBorderColor)
+          }
+          &:first-child {
+            &:before {
+              display: none;
+            }
+          }
+          div{
+            padding-top: 5px;
+            padding-bottom: 5px;
+            .ellipsisLn(1);
+          }
+          .head, .body1{
+            /*position: relative;*/
+            flex: 1;
+          }
+          .body3{
+            flex: 3;
+          }
+        }
+
+        &.selected{
+          position: relative;
+          max-width: 270px;
+          box-shadow: 0px 1px 4px rgba(0,0,0,0.3),
+          0px 0px 20px rgba(0,0,0,0.1) inset;
+          &:before,
+          &:after {
+            content:"";
+            position:absolute;
+            z-index:-1;
+          }
+        }
+        &.actionOver{
+          background: rgba(190,190,190,0.8);
+        }
+      }
+      &:after {
+        .weUIborder()
+      }
+      &:nth-child(1){
+      }
+      &:nth-child(2){
+      }
+      &:nth-child(4){
+      }
+    }
+  }
+}
+
+.weUIborder() {
+  z-index: 1;
+  content: " ";
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid rgba(0, 0, 0, .2);
+  transform: scale(.5);
+  transform-origin: 0 0;
+  box-sizing: border-box;
+  border-radius: @weuiBtnBorderRadius*2;
+}
