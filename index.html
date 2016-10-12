@@ -6,12 +6,37 @@
     <link rel="stylesheet" href="style/main.css"/>
 </head>
 <body>
-    <div id="container">
+    <!--选择等级界面-->
+    <div id="RankContainer" class="container">
+        <div class="content">
+            <div id="grid" class="grid clearfix"></div>
+        </div>
+    </div>
+    <!--展示该等级下所有卡片供玩家选择界面-->
+    <div id="RankCardContainer"></div>
+    <!--阴影效果-->
+    <div class="drop-overlay" id="drop-overlay"></div>
+    <!--展示玩家已选择的卡片并微调-->
+    <div id="SelectedCardContainer" class="drop-area">
+        <div>
+            <div class="drop-area__item"></div>
+            <div class="drop-area__item"></div>
+            <div class="drop-area__item"></div>
+            <div class="drop-area__item"></div>
+        </div>
+    </div>
+    <!--正式游戏画面-->
+    <div id="GameContainer" class="container">
         <div id="live"></div>
         <div id="comment"></div>
     </div>
+    <!--实现卡片动画-->
+    <div id="DeckContainer"></div>
+    <!--测试按钮 方便测试游戏AI逻辑-->
+    <div id="test"></div>
     <script src="js/polyfill.js"></script>
     <script src="js/config.js"></script>
+    <script src="lib/deck/deck.js"></script>
     <script src="js/index.js"></script>
 </body>
 </html>
