@@ -25,10 +25,12 @@ export default function Comment($el) {
     let $li;
     let host;
     let guest;
+    let Carder = "";
     let Attacker = "";
     let Attacked = "";
     let damage = 0;
     let message;
+    let Card = null;
     let AttackerCard = null;
     let AttackedCard = null;
     let ground1 = null;
@@ -56,6 +58,13 @@ export default function Comment($el) {
         }
         $li = newElement("li", Type, this.$ul, message, {});
         $li = newElement("li", Type, this.$ul, "<br/>", {});
+        break;
+      case "Effect":
+        Card = Message[0];
+        message = Message[1];
+        Carder = that.getCardName(Card);
+        message = Carder + " 发动了特效: " + "<span class='damage'>" + message + "</span>" + " !";
+        $li = newElement("li", Type, this.$ul, message, {});
         break;
       case "GameOver":
         ground1 = Message[0];

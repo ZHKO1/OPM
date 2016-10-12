@@ -1,4 +1,7 @@
 @import "base/reset";
+@import "config.less";
+@import "card.less";
+@import "ready.less";
 
 * {
   -webkit-box-sizing: border-box;
@@ -12,11 +15,18 @@ body{
   background-color: #e2e2e2;
   background-image: url("../img/shadow_light.png");
   background-repeat: repeat-x;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
-@container_width:1080px;
-@container_height:720px;
-#container {
+#GameContainer {
+  background-color: #e2e2e2;
   position: fixed;
   width: @container_width;
   height: @container_height;
@@ -27,9 +37,23 @@ body{
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
+
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  -webkit-transform: translate3d(-50%,-50%,0) scale3d(1.1,1.1,1);
+  transform: translate3d(-50%,-50%,0) scale3d(1.1,1.1,1);
+  pointer-events: none;
   &:after {
     .weUIborder()
   }
+}
+
+#GameContainer.show{
+  opacity: 1;
+  -webkit-transform: translate3d(-50%,-50%,0) scale3d(1,1,1);
+  transform: translate3d(-50%,-50%,0) scale3d(1,1,1);
+  pointer-events: auto;
 }
 
 #live{
@@ -73,6 +97,13 @@ body{
           color:#383939;
         }
       }
+      &.Effect{
+        color: #999;
+        .damage{
+          font-weight: bold;
+          color:#383939;
+        }
+      }
       &.Kill{
         color:red;
       }
@@ -106,17 +137,18 @@ body{
       line-height: 30px;
     }
   }
-  .cards{
+  .HalfGroundCards{
     position: relative;
     flex: 6;
     font-size: 0px;
     height: 100%;
-    .card{
+    .HalfGroundCard{
       font-size: 12px;
       position: absolute;
       width:50%;
       height:50%;
       color:grey;
+      border-radius: @weuiBtnBorderRadius;
       &:nth-child(1){
         top:0px;
         left:0px;
@@ -142,13 +174,16 @@ body{
         bottom: 0;
       }
       &.backrow{
-        background:rgb(247, 247, 247)
+        /*background:rgb(247, 247, 247)*/
       }
       .cardContainer{
         position: relative;
-        width: 203px;
-        height: 90%;
-        margin: 2.5% auto 2.5% auto;
+        width: 60%;
+        height: e("calc(100% - 24px)");
+        margin-top: 12px;
+        margin-bottom: 12px;
+        margin-right:12px;
+        margin-left:auto;
         &:after {
           .weUIborder()
         }
@@ -158,16 +193,16 @@ body{
           height:16.66%;
           display: flex;
           &:before{
-            .setTopLine(@weuiCellBorderColor)
+            .setBottomLine(@weuiCellBorderColor)
           }
           &:first-child {
             &:before {
               display: none;
             }
           }
+          &:nth-child(6){
+          }
           div{
-            padding-top: 5px;
-            padding-bottom: 5px;
             .ellipsisLn(1);
           }
           .head, .body1{
@@ -221,4 +256,26 @@ body{
   transform-origin: 0 0;
   box-sizing: border-box;
   border-radius: @weuiBtnBorderRadius*2;
+}
+
+#test{
+  width:50px;
+  height:50px;
+  position: fixed;
+  bottom: 0px;
+  left:0px;
+  background:white;
+}
+
+#RankContainer{
+  z-index : 1;
+}
+#RankCardContainer{
+  z-index : 2;
+}
+#SelectedCardContainer{
+  z-index : 3;
+}
+#DeckContainer{
+  z-index : 4;
 }
