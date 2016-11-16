@@ -136,7 +136,6 @@ export default class HalfGround {
     }
 
     let cards_order = ["FL", "FR", "BL", "BR"];
-    console.log(deck.cards);
     cards_order.forEach((position, i)=> {
       let deckCard = deck.cards[(this.role == "host") ? i:(i + 4)];
       this.CardMap[position].deckCard = deckCard;

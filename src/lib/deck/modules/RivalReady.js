@@ -55,7 +55,7 @@ export default {
       })
 
       card.animateTo({
-        delay: 600,
+        delay: 1000,
         duration: 400,
 
         x: positionMap[i].x,

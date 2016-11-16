@@ -127,7 +127,6 @@ export default function SelectCard($el, next) {
       });
       card.DraggableObj = card_;
     });
-
     deck.mount(DeckContainer);
     deck.intro();
     deck.sort();
@@ -144,12 +143,12 @@ export default function SelectCard($el, next) {
     let Player_Cards = {FL: dropedCardArr[0], FR: dropedCardArr[1], BL: dropedCardArr[2], BR: dropedCardArr[3]};
 
     if(dropedCardArr.length == 4){
-      self.ExitFromSelectedCard();
+      self.ExitFromSelectedCard(Player_Cards);
       self.next && self.next(Player_Cards, deck);
     }
   };
 
-  self.ExitFromSelectedCard = function(){
+  self.ExitFromSelectedCard = function(Player_Cards){
     body.classList.remove('drag-active');
     RankCardContainer.classList.remove('show');
     RankContainer.style.display = "none";
@@ -164,6 +163,21 @@ export default function SelectCard($el, next) {
       item.toDragNode();
       item.DraggableObj.destroy();
       item.setNotMoveBack();
+    });
+    //根据选择的卡片再次整理
+    var Selected_Card = [Player_Cards.FL, Player_Cards.FR, Player_Cards.BL, Player_Cards.BR ];
+    deck.cards.forEach((item)=>{
+      Selected_Card.forEach((item_, i)=>{
+        if(item.card.id == item_)
+        item.card.sort_id = i;
+      });
+    });
+    deck.cards.sort((itemA,itemB)=>{
+      return itemA.card.sort_id - itemB.card.sort_id
+    });
+    deck.cards.forEach((item, i)=>{
+      item.i = i;
+      delete item.card.sort_id;
     });
     [].slice.call( document.querySelectorAll( '#SelectedCardContainer .drop-area__item' )).forEach( (el)=> {
       el.innerHTML = "";
