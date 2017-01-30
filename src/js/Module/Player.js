@@ -1,6 +1,6 @@
-import {createElement, newElement} from '../tool.js'
+import {createElement, newElement} from '../lib/tool.js'
 export default class Player {
-  constructor(x) {
-    this.name = x;
-  }
+    constructor(x) {
+        this.name = x;
+    }
 }

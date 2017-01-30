@@ -1,48 +1,48 @@
-
 export default function (target) {
-  var array = Array.prototype
+    var array = Array.prototype
 
-  var queueing = []
-  target.queueing = queueing;
+    var queueing = []
+    target.queueing = queueing;
 
-  target.queue = queue
-  target.queued = queued
+    target.queue = queue
+    target.queued = queued
 
-  return target
+    return target
 
-  function queued (action) {
-    return function () {
-      var self = this
-      var args = arguments
+    function queued(action) {
+        return function () {
+            var self = this
+            var args = arguments
 
-      queue(function (next) {
-        action.apply(self, array.concat.apply(next, args))
-      })
-    }
-  }
-
-  function queue (action) {
-    if (!action) {
-      return
+            queue(function (next) {
+                action.apply(self, array.concat.apply(next, args))
+            })
+        }
     }
 
-    queueing.push(action)
+    function queue(action) {
+        if (!action) {
+            return
+        }
 
-    if (queueing.length === 1) {
-      next()
+        queueing.push(action)
+
+        if (queueing.length === 1) {
+            next()
+        }
     }
-  }
-  function next () {
-    queueing[0](function (err) {
-      if (err) {
-        throw err
-      }
 
-      queueing = queueing.slice(1)
+    function next() {
+        queueing[0](function (err) {
+            if (err) {
+                throw err
+            }
 
-      if (queueing.length) {
-        next()
-      }
-    })
-  }
+            queueing = queueing.slice(1)
+
+            if (queueing.length) {
+                next()
+            }
+        })
+    }
 }

@@ -1,4 +1,3 @@
-
 import createElement from './createElement'
 
 import animationFrames from './animationFrames'
@@ -20,62 +19,71 @@ import translate from './translate'
 
 import Card from './card'
 
-export default function Deck (number) {
-  // init cards array
-  var cards = new Array( number )
+export default function Deck() {
+    // init cards array
+    var cards = []
 
-  var $el = createElement('div')
-  var self = observable({mount, unmount, cards, $el})
-  var $root
+    var $el = createElement('div')
+    var self = observable({mount, unmount, cleanDragCard, cards, $el})
+    var $root
 
-  var modules = Deck.modules
-  var module
+    var modules = Deck.modules
+    var module
 
-  // make queueable
-  queue(self)
+    // make queueable
+    queue(self)
 
-  // load modules
-  for (module in modules) {
-    addModule(modules[module])
-  }
+    // load modules
+    for (module in modules) {
+        addModule(modules[module])
+    }
 
-  // add class
-  $el.classList.add('deck')
+    // add class
+    $el.classList.add('deck')
 
-  var card
+    var card
 
-  // create cards
-  for (var i = cards.length; i; i--) {
-    card = cards[i - 1] = Card(i - 1)
-    card.mount($el)
-  }
+    // create cards
+    for (var i = cards.length; i; i--) {
+        card = cards[i - 1] = Card(i - 1)
+        card.mount($el)
+    }
 
-  self.addCard = function(){
-    var card;
-    var i = self.cards.length;
-    self.cards.push(null);
-    card = self.cards[i] = Card(i)
-    card.mount($el);
-    return card;
-  }
+    self.addCard = function () {
+        var card;
+        var i = self.cards.length;
+        self.cards.push(null);
+        card = self.cards[i] = Card(i)
+        card.mount($el);
+        return card;
+    }
 
-  return self
+    return self
 
-  function mount (root) {
-    // mount deck to root
-    $root = root
-    $root.appendChild($el)
-  }
+    function mount(root) {
+        // mount deck to root
+        $root = root
+        $root.appendChild($el)
+    }
 
-  function unmount () {
-    // unmount deck from root
-    $root.removeChild($el);
-    self.queueing = []
-  }
+    function unmount() {
+        // unmount deck from root
+        $root.removeChild($el);
+        self.queueing = []
+    }
 
-  function addModule (module) {
-    module.deck && module.deck(self)
-  }
+    function addModule(module) {
+        module.deck && module.deck(self)
+    }
+
+    function cleanDragCard(){
+        self.cards.forEach(function(card){
+            (!card.isStaticNode()) && card.unmount();
+        });
+        self.cards = self.cards.filter(function(card){
+            return card.isStaticNode();
+        });
+    }
 }
 Deck.animationFrames = animationFrames
 Deck.ease = ease

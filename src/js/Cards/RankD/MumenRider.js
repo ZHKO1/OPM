@@ -1,3 +1,32 @@
-import Card from '../../Module/MainCard.js'
+import Card from '../../Module/MainCard/index.js'
 export default class MumenRider extends Card {
+    Effect_Defeated(AttackerCard, next) {
+        let that = this;
+        let result = [];
+        let card2;
+        let ground = that.Ground;
+        switch (that.position) {
+            case "FL":
+                card2 = ground.CardMap["BL"];
+                break;
+            case "FR":
+                card2 = ground.CardMap["BR"];
+                break;
+            case "BL":
+                card2 = ground.CardMap["FL"];
+                break;
+            case "BR":
+                card2 = ground.CardMap["FR"];
+                break;
+        }
+        if (card2.hp > 0) {
+            that.comment.addComment("Effect", that, "组合搭档体力加3");
+            card2.hp = card2.hp + 3;
+        } else {
+            that.comment.addComment("Effect", that, "组合搭档复活!");
+            card2.reviveBack();
+            card2.hp = 3;
+        }
+        next();
+    }
 }
