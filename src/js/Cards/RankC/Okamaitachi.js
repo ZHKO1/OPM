@@ -11,6 +11,8 @@ export default class Okamaitachi extends Card {
       card2 = ground.CardMap["BR"];
       (card2.hp > 0) && result.push(card2);
       that.comment.addComment("Effect", that, "远程AOE攻击");
+    }else{
+      result.push(card1);
     }
     return result;
   }
