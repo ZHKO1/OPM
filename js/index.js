@@ -1787,6 +1787,8 @@ var Okamaitachi = function (_Card) {
         card2 = ground.CardMap["BR"];
         card2.hp > 0 && result.push(card2);
         that.comment.addComment("Effect", that, "远程AOE攻击");
+      } else {
+        result.push(card1);
       }
       return result;
     }
@@ -1819,10 +1821,10 @@ var BlueFire = function (_Card) {
       var that = this;
       var AttackedCard = AttackedCardArray[0];
       setTimeout(function () {
-        that.comment.addComment("Effect", that, "速度减2");
-        AttackedCard.spd = AttackedCard.spd - 2;
-        if (AttackedCard.spd < 0) {
-          AttackedCard.spd = 0;
+        that.comment.addComment("Effect", that, "体力减1");
+        AttackedCard.hp = AttackedCard.hp - 1;
+        if (AttackedCard.hp < 0) {
+          AttackedCard.hp = 0;
         }
         next();
       }, 300);
@@ -2708,12 +2710,9 @@ var Garou = function (_Card) {
     value: function Effect_RoundEndBuff(next) {
       var that = this;
       that.comment.addComment("Effect", that, "攻击加1、防御加1、速度加1!");
-      that.comment.addComment("", "不.....不可能!");
-      that.comment.addComment("", "居然是血量加2，攻击加2、防御加2、速度加2!");
-      that.hp = that.hp + 2;
-      that.att = that.att + 2;
-      that.def = that.def + 2;
-      that.spd = that.spd + 2;
+      that.att = that.att + 1;
+      that.def = that.def + 1;
+      that.spd = that.spd + 1;
       next();
     }
   }, {
